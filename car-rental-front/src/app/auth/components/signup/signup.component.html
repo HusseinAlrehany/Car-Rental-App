@@ -1,0 +1,131 @@
+<!--<div class="signup-container">
+    <nz-card class="signup-card">
+      <h2 class="title">Sign Up</h2>
+      
+      <form nz-form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please enter your name!">
+            <nz-input-group nzPrefixIcon="user">
+              <input nz-input formControlName="name" placeholder="Full Name" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+  
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please enter a valid email!">
+            <nz-input-group nzPrefixIcon="mail">
+              <input nz-input formControlName="email" placeholder="Email Address" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+  
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Password must be at least 6 characters!">
+            <nz-input-group nzPrefixIcon="lock">
+              <input nz-input formControlName="password" type="password" placeholder="Password" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+  
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Passwords do not match!">
+            <nz-input-group nzPrefixIcon="lock">
+              <input nz-input formControlName="confirmPassword" type="password" placeholder="Confirm Password" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+  
+        <nz-form-item class="button-group">
+          <button nz-button nzType="primary" [disabled]="signUpForm.invalid" class="register-btn">
+            Register
+          </button>
+        </nz-form-item>
+  
+        <div class="login-link">
+          <span>Already have an account?</span>
+          <a routerLink="/login">Log in</a>
+        </div>
+        
+      </form>
+    </nz-card>
+  </div>-->
+
+
+  <div class="signup-container">
+    <nz-card class="signup-card">
+      <h2 class="title">Sign Up</h2>
+  
+      <form nz-form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  
+        <!-- Name Field -->
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="user">
+              <input nz-input formControlName="name" placeholder="Full Name" />
+            </nz-input-group>
+            <div *ngIf="signUpForm.controls['name'].invalid && signUpForm.controls['name'].touched" class="error">
+              <span *ngIf="signUpForm.controls['name'].hasError('required')">Please enter your name!</span>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+  
+        <!-- Email Field -->
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="mail">
+              <input nz-input formControlName="email" placeholder="Email Address" />
+            </nz-input-group>
+            <div *ngIf="signUpForm.controls['email'].invalid && signUpForm.controls['email'].touched" class="error">
+              <span *ngIf="signUpForm.controls['email'].hasError('required')">Please enter your email!</span>
+              <span *ngIf="signUpForm.controls['email'].hasError('email')">Please enter a valid email!</span>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+  
+        <!-- Password Field -->
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group>
+              <input nz-input [type]="showPassword ? 'text' : 'password'" formControlName="password" type="password" placeholder="Password" />  
+              <span nz-icon [nzType]="showPassword ? 'eye' : 'eye-invisible'" class="toggle-icon"
+              (click)="togglePasswordVisibility()"></span> 
+            </nz-input-group>
+            <div *ngIf="signUpForm.controls['password'].invalid && signUpForm.controls['password'].touched" class="error">
+              <span *ngIf="signUpForm.controls['password'].hasError('required')">Password is required!</span>
+              <span *ngIf="signUpForm.controls['password'].hasError('minlength')">Password must be at least 6 characters!</span>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+  
+        <!-- Confirm Password Field -->
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group>
+              <input nz-input [type]="showPassword ? 'text' : 'password'" formControlName="confirmPassword" type="password" placeholder="Confirm Password" />
+              <span nz-icon [nzType]="showPassword ? 'eye' : 'eye-invisible'" class="toggle-icon" (click)="togglePasswordVisibility()"></span>
+            </nz-input-group>
+            <div *ngIf="signUpForm.controls['confirmPassword'].invalid && signUpForm.controls['confirmPassword'].touched" class="error">
+              <span *ngIf="signUpForm.controls['confirmPassword'].hasError('required')">Please confirm your password!</span>
+              <span *ngIf="signUpForm.controls['confirmPassword'].hasError('mustMatch')">Passwords do not match!</span>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+  
+        <!-- Submit Button -->
+        <nz-form-item class="button-group">
+          <button nz-button nzType="primary" [disabled]="signUpForm.invalid" class="register-btn">
+            Register
+          </button>
+        </nz-form-item>
+  
+        <div class="login-link">
+          <span>Already have an account?</span>
+          <a routerLink="/login">Log in</a>
+        </div>
+  
+      </form>
+    </nz-card>
+  </div>
+  
+  

@@ -1,0 +1,39 @@
+<div class="login-container">
+    <nz-card class="login-card">
+      <h2 class="title">Signin</h2>
+      
+      <form nz-form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+        
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="mail">
+              <input nz-input formControlName="email" placeholder="Email Address" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+  
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Password must be at least 6 characters!">
+            <nz-input-group>
+              <input nz-input [type]="showPassword ? 'text' : 'password'" formControlName="password" type="password" placeholder="Password" />
+              <span nz-icon [nzType]="showPassword ? 'eye' : 'eye-invisible'" class="toggle-icon" 
+              (click)="togglePasswordVisibility()"></span>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+  
+        <nz-form-item class="button-group">
+          <button nz-button nzType="primary" [disabled]="signInForm.invalid" class="register-btn">
+            Login
+          </button>
+        </nz-form-item>
+  
+        <div class="signup-link">
+          <span>Don't have Account?</span>
+          <a routerLink="/register">Sign Up</a>
+        </div>
+        
+      </form>
+    </nz-card>
+  </div>
+  

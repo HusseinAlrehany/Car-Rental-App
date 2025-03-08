@@ -1,0 +1,77 @@
+.custom-navbar {
+   background-color: #003973;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 10px;
+
+   .navbar-title {
+    >a {
+        color: white !important;
+        margin-left: 10px;
+        font-size: 18px;
+        font-weight: bolder;
+    }
+   }
+
+   .nav-links {
+      display: flex;
+      align-items: center;
+
+      a{
+        color: white;
+        margin-left: 15px;
+      }
+   }
+}
+
+
+/* Ensure proper full-screen hero background */
+.hero {
+   height: 100vh;
+   background: url('/assets/car-rental.jpg') center/cover no-repeat; // Use a local image
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+   color: white;
+   position: relative;
+ 
+   &::after {
+     content: "";
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background: rgba(0, 0, 0, 0.3); /* Reduce darkness */
+   }
+ 
+   .hero-content {
+     position: relative;
+     z-index: 1;
+     max-width: 600px;
+ 
+     h1 {
+       font-size: 48px;
+       font-weight: bold;
+       margin-bottom: 16px;
+       color: brown;
+     }
+ 
+     p {
+       font-size: 18px;
+       margin-bottom: 24px;
+     }
+ 
+     button {
+       font-size: 20px;
+       padding: 30px 50px;
+       border-radius: 100px;
+     }
+
+     
+    
+   }
+ }
+ 

@@ -1,0 +1,111 @@
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #2196F3, #E91E63);
+  padding: 20px;
+}
+
+.signup-card {
+  width: 400px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    nz-form-item {
+      margin-bottom: 16px;
+      width: 100%;
+    }
+
+    nz-input-group {
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      input {
+        width: 100%;
+        padding-left: 40px; // Add padding to the left for the eye icon
+      }
+
+      .toggle-icon {
+        position: absolute;
+        left: 10px; // Move the eye icon to the left
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 18px;
+        color: #6b7280;
+        cursor: pointer;
+        transition: color 0.3s ease, opacity 0.3s ease;
+        z-index: 10; // Ensure it's above the input field
+        opacity: 1; // Fix disappearing issue
+
+        &:hover {
+          color: #333;
+          opacity: 1; // Fix disappearing on hover
+        }
+      }
+    }
+
+    .error {
+      color: #e63946;
+      font-size: 12px;
+      margin-top: 5px;
+      text-align: left;
+    }
+
+    .button-group {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+
+      .register-btn {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+
+        &:disabled {
+          background: #d1d5db;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .login-link {
+      margin-top: 16px;
+      font-size: 14px;
+
+      span {
+        color: #555;
+      }
+
+      a {
+        color: #1890ff;
+        text-decoration: none;
+        font-weight: bold;
+        margin-left: 4px;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+<div *ngIf="!isAdminLoggedIn && !isCustomerLoggedIn">
+    <nz-header class="main-header" nz-row nzType="flex" class="custom-navbar">
+       <div class="navbar-title">
+            <a routerLink="/login">Car Rental Service</a>
+        </div>
+        <div class="nav-links">
+            <a nz-button nzType="link" routerLink="/register" routerLinkActive="active">Sign Up</a>
+            <a nz-button nzType="link" routerLink="/login" routerLinkActive="active">Login</a>
+
+        </div>
+
+    </nz-header>
+</div>
+
+<div *ngIf="isAdminLoggedIn">
+  <nz-header class="main-header" nz-row nzType="flex" class="custom-navbar">
+     <div class="navbar-title">
+          <a routerLink="/admin/dashboard">LoggedIn Admin</a>
+      </div>
+      <div class="nav-links">
+          <a nz-button nzType="link" routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
+          <a nz-button nzType="link" routerLink="/admin/car" routerLinkActive="active">AddCar</a>
+          <a nz-button nzType="link" routerLinkActive="active" (click)="logout()">Logout</a>
+      </div>
+
+  </nz-header>
+</div>
+
+<div *ngIf="isCustomerLoggedIn">
+  <nz-header class="main-header" nz-row nzType="flex" class="custom-navbar">
+     <div class="navbar-title">
+          <a routerLink="/customer/dashboard">LoggedIn Customer</a>
+      </div>
+      <div class="nav-links">
+          <a nz-button nzType="link" routerLink="/customer/dashboard" routerLinkActive="active">Dashboard</a>
+          <a nz-button nzType="link" routerLinkActive="active" (click)="logout()">Logout</a>
+
+      </div>
+
+  </nz-header>
+</div>
+
+<!-- Hero Section -->
+ <!--!isAdminLoggedIn && !isCustomerLoggedIn to avoid showing this section to admin and customer users-->
+<section *ngIf="isHomePage && !isAdminLoggedIn && !isCustomerLoggedIn" class="hero" >
+    <div class="hero-content">
+      <h1>Find Your Perfect Ride</h1>
+      <p>Book a car easily and travel anywhere with comfort.</p>
+      <button nz-button nzType="primary" routerLink="/register">Get Started</button>
+    </div>
+  </section>
+
+<router-outlet></router-outlet>
