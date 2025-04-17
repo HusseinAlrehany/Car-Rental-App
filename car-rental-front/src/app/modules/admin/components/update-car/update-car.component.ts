@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ZorroImportsModule } from '../../../../Angular.Zorro';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AdminService } from '../../service/admin.service';
@@ -11,9 +11,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-update-car',
   standalone: true,
-  imports: [ZorroImportsModule, NzFormModule, ReactiveFormsModule, CommonModule ],
+  imports: [ZorroImportsModule, NzFormModule, ReactiveFormsModule, CommonModule],
   templateUrl: './update-car.component.html',
-  styleUrl: './update-car.component.scss'
+  styleUrl: './update-car.component.scss',
+  
 })
 export class UpdateCarComponent implements OnInit{
 
@@ -21,7 +22,7 @@ carId: number = this.activatedRoute.snapshot.params["carId"];
 
 updateCarForm!: FormGroup;
 
-existingImage! : string | null;
+existingImage : string | null = null;
 selectedFile!: File | null;
 imagePreview!: string | ArrayBuffer | null;
 imgChanged = false;
@@ -36,7 +37,8 @@ listOfTransmission = ["Manual", "Automatic"];
               private router: Router,
               private message: NzMessageService,
               private adminService: AdminService,
-              private activatedRoute: ActivatedRoute
+              private activatedRoute: ActivatedRoute,
+             
               
   ){}
 
@@ -54,6 +56,7 @@ listOfTransmission = ["Manual", "Automatic"];
 
     })
 
+    //repopulate the form with the retrieved car
     this.getCarById();
     
   }
@@ -84,9 +87,9 @@ listOfTransmission = ["Manual", "Automatic"];
   getCarById() {
      this.adminService.getCarById(this.carId).subscribe(
       (res)=> {
-        if(res.id != null){
-          this.updateCarForm.patchValue(res);
-          this.existingImage = 'data:image/jpeg;base64,' + res.image;
+        if(res.data.id != null){
+          this.updateCarForm.patchValue(res.data);
+          this.existingImage = 'data:image/jpeg;base64,' + res.data.image;
         }
       }
      )
@@ -96,17 +99,20 @@ listOfTransmission = ["Manual", "Automatic"];
     
     if(this.updateCarForm.valid){
        const formData: FormData = new FormData();
+       
        if(this.imgChanged && this.selectedFile){
         formData.append('returnedImage', this.selectedFile);
        }
 
        Object.keys(this.updateCarForm.controls).forEach(key=> {
-         formData.append(key, this.updateCarForm.get(key)?.value);
+       
+          formData.append(key, this.updateCarForm.get(key)?.value);
+
        })
 
        this.adminService.updateCar(this.carId, formData).subscribe(
         (res)=> {
-          if(res.id != null){
+          if(res.data.id != null){
             this.message.success("Car Updated Successfully!", {nzDuration: 3000});
             this.router.navigateByUrl('/admin/dashboard');
           }
@@ -114,6 +120,10 @@ listOfTransmission = ["Manual", "Automatic"];
         (error: HttpErrorResponse)=> {
           if(error.status === 400 && error.error){
             this.showValidationErrors(error.error);
+          } else if(error.status === 429){
+            this.message.warning(error.error.message, {nzDuration: 5000});
+          } else {
+            this.message.error("An unexpected error occured");
           }
 
         }

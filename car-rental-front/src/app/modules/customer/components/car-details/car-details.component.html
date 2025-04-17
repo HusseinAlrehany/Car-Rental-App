@@ -1,0 +1,37 @@
+<nz-card class="car-detail-card" nzBordered="false">
+    <div class="car-image-container">
+      <img [src]="processedImg" alt="Car Image" class="car-image" />
+    </div>
+  
+    <div class="car-info">
+      <h2 class="brand">{{ car.brand }}</h2>
+      <p class="price">Price: <span>${{ car.price }}</span></p>
+  
+      <nz-divider></nz-divider>
+  
+      <div class="car-specs">
+        <div class="spec-item">
+          <strong>Year:</strong> {{ car.modelYear | date:'yyyy'}}
+        </div>
+        <div class="spec-item">
+          <strong>Color:</strong> {{ car.color }}
+        </div>
+        <div class="spec-item">
+            <strong>Transmission:</strong> {{ car.transmission }}
+          </div>
+          <div class="spec-item">
+            <strong>Name:</strong> {{ car.name }}
+          </div>
+          <div class="spec-item">
+            <strong>Type:</strong> {{ car.type }}
+          </div>
+      </div>
+  
+      <div class="action-buttons">
+        <button nz-button nzType="primary" nzSize="large">Book Now</button>
+        <button nz-button nzType="default" nzSize="large"
+         (click)="onCancel()">Cancel</button>
+      </div>
+    </div> 
+  </nz-card>
+  

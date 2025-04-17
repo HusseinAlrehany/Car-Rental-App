@@ -33,15 +33,24 @@ export class SignupComponent {
       name: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(6)]],
-      confirmPassword: [null, [Validators.required, this.passwordMatchValidator]]
-    })
-  }
+      confirmPassword: ['', [Validators.required, this.passwordMatchValidator]]
+    });
 
+    //whenever the password changes, revalidate the confirm password
+    //to make the validation error disappear if the password changed
+    this.signUpForm.get('password')?.valueChanges.subscribe(()=> {
+      this.signUpForm.get('confirmPassword')?.updateValueAndValidity();
+    });
+
+
+  }
+  
   //pasword and confirm password must match validation
+  //this is field level validation (error message will show under the field)
   passwordMatchValidator = (control: FormControl): { [s: string]: boolean } => {
     if(!control.value){
         return {required: true};
-    } else if (control.value !== this.signUpForm.controls['password'].value) {
+   } else if (control.value !== this.signUpForm.controls['password'].value) {
       return { mustMatch: true, error: true};
     }
     return {};
@@ -52,7 +61,10 @@ export class SignupComponent {
   }
   onSubmit(){
     console.log("Sign up -> " , this.signUpForm.value);
-    this.authService.signUp(this.signUpForm.value).subscribe(
+    //execluding the confirmPassword from request body to avoid Json parsing error in the backend
+    const {name, email, password} = this.signUpForm.value; 
+    
+    this.authService.signUp({name, email, password}).subscribe(
       (res)=> {
         if(res.id != null){
           this.nzMessage.success("sign up successfull!", {nzDuration: 3000, nzPauseOnHover: true});

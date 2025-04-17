@@ -1,4 +1,4 @@
-package com.coding.car_rental_app.exceptions.ImageCustomValidationException;
+package com.coding.car_rental_app.validation.imgcustomvalidation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

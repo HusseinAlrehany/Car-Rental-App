@@ -3,7 +3,7 @@
  </div>
  
  <div class="container">
-     <form nz-form [formGroup]="updateCarForm">
+     <form nz-form [formGroup]="updateCarForm" (ngSubmit)="updateCar()">
        
        <div class="file-upload-container">
          <label nz-button nzType="default" class="file-upload-label">
@@ -147,7 +147,7 @@
  
        <nz-form-item>
          <nz-form-control [nzSpan]="24" class="submit-button">
-           <button nz-button nzType="primary" [disabled]="updateCarForm.invalid">Add Car</button>
+           <button nz-button nzType="primary" [disabled]="updateCarForm.invalid">Update Car</button>
          </nz-form-control>
        </nz-form-item>
      </form>

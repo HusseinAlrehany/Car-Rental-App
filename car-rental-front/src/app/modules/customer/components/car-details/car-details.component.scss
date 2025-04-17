@@ -1,0 +1,78 @@
+.car-detail-card {
+    max-width: 800px;
+    margin: 2rem auto;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background: #fff;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+  
+    .car-image-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+  
+      .car-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        transition: transform 0.3s ease;
+  
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    }
+  
+    .car-info {
+      text-align: center;
+  
+      .brand {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+  
+      .price {
+        font-size: 1.5rem;
+        color: #1890ff;
+        margin-bottom: 1rem;
+  
+        span {
+          font-weight: bold;
+        }
+      }
+  
+      .car-specs {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin: 1rem 0;
+  
+        .spec-item {
+          background: #f5f5f5;
+          padding: 0.75rem;
+          border-radius: 8px;
+          font-size: 0.95rem;
+        }
+      }
+  
+      .action-buttons {
+        margin-top: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+  
+        button {
+          min-width: 140px;
+          border-radius: 8px;
+        }
+      }
+    }
+  }
+  

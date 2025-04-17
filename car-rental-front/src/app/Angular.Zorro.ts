@@ -22,6 +22,8 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 // Add more Zorro modules as needed
 
 @NgModule({
@@ -49,6 +51,8 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
     NzBadgeModule,
     NzAlertModule,
     NzTagModule,
+    NzPaginationModule,
+    NzDividerModule,
     // Export more Zorro modules as needed
 ]})
 export class ZorroImportsModule {}

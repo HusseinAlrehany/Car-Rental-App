@@ -1,5 +1,6 @@
 package com.coding.car_rental_app.controller.authentication;
 
+import com.coding.car_rental_app.apiresponse.ApiResponse;
 import com.coding.car_rental_app.dtos.AuthenticationResponse;
 import com.coding.car_rental_app.dtos.SignUpRequest;
 import com.coding.car_rental_app.dtos.SigninRequest;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+//the body should be JSON not plain text
+//to avoid issues in frontend like
+//(SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data)
 @RestController
 public class AuthController {
     @Autowired
@@ -34,22 +38,17 @@ public class AuthController {
 
 
    @PostMapping("/signup")
-   public ResponseEntity<?> signUp(@RequestBody SignUpRequest signUpRequest){
+   public ResponseEntity<ApiResponse<UserDTO>> signUp(@RequestBody SignUpRequest signUpRequest){
                 UserDTO userDTO = authService.signUp(signUpRequest);
 
-                return userDTO != null ? ResponseEntity.ok(userDTO):
-                                         ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                                 //the body should be JSON not plain text
-                                                 //to avoid issues in frontend like
-                                                 //(SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data)
-                                                 .body(Map.of("message", "Sign up Failed"));
+                return ResponseEntity.status(HttpStatus.CREATED).body(
+                        new ApiResponse<>("SignUp Successful"));
    }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signin(@RequestBody SigninRequest signinRequest, HttpServletResponse httpServletResponse){
+    public ResponseEntity<AuthenticationResponse> signin(@RequestBody SigninRequest signinRequest, HttpServletResponse httpServletResponse){
        AuthenticationResponse authenticationResponse = authService.signIn(signinRequest, httpServletResponse);
-       return authenticationResponse != null ? ResponseEntity.ok(authenticationResponse):
-                                               ResponseEntity.notFound().build();
+       return ResponseEntity.status(HttpStatus.OK).body(authenticationResponse);
     }
 
     @PostMapping("/logout")

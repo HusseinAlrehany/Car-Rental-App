@@ -13,6 +13,7 @@ import com.coding.car_rental_app.tokens.utils.JwtUtils;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -107,6 +108,7 @@ public class AuthServiceImpl implements AuthService{
 
         return response;
     }
+    @Cacheable(value = "users", key = "#email")
     @Override
     public boolean hasUserWithEmail(String email) {
         return userRepository.findFirstByEmail(email).isPresent();
