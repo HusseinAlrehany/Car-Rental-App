@@ -23,7 +23,6 @@ public class ExceptionHandler {
                 status);
     }
 
-
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
     public ResponseEntity<Object> globalExceptionHandler(Exception ex){
         return errorResponseBuilder(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
