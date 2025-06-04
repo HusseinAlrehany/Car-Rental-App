@@ -26,43 +26,10 @@ import java.time.Duration;
 @Configuration
 public class RedisConfig {
 
-   /*@Bean
-    public LettuceConnectionFactory redisConnectionFactory(){
-         return new LettuceConnectionFactory();
-    }
-
-    @Bean
-    public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory connectionFactory){
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(connectionFactory);
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-
-        return template;
-    }
-
-    @Bean
-    public RedisCacheConfiguration cacheConfiguration() {
-        return RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofMinutes(10))  // Cache expiration time
-                .disableCachingNullValues()
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
-    }
-
-    @Bean
-    public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
-        System.out.println("Creating RedisCacheManager...");
-        return RedisCacheManager.builder(connectionFactory)
-                .cacheDefaults(cacheConfiguration())
-                .build();
-    }*/
-
         @Bean
         public LettuceConnectionFactory redisConnectionFactory() {
             return new LettuceConnectionFactory();
         }
-
 
 
     @Bean

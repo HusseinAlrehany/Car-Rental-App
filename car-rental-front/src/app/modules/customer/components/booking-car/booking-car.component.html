@@ -1,0 +1,60 @@
+<nz-card class="car-detail-card" nzBordered="false">
+  <div class="car-detail-container">
+    <!-- Small car image -->
+    <div class="car-image-container">
+      <img [src]="processedImg" alt="Car Image" class="car-image" />
+    </div>
+
+    <!-- Car information -->
+    <div class="car-info">
+      <h2 class="brand">{{ car.brand }}</h2>
+      <p class="price">
+        <strong>Price:</strong> ${{ car.price }}
+      </p>
+
+      <nz-divider></nz-divider>
+
+      <div class="car-specs">
+        <div class="spec-item"><strong>Year:</strong> {{ car.modelYear | date:'yyyy' }}</div>
+        <div class="spec-item"><strong>Color:</strong> {{ car.color }}</div>
+        <div class="spec-item"><strong>Transmission:</strong> {{ car.transmission }}</div>
+        <div class="spec-item"><strong>Name:</strong> {{ car.name }}</div>
+        <div class="spec-item"><strong>Type:</strong> {{ car.type }}</div>
+      </div>
+       <nz-divider></nz-divider>
+
+    </div>
+  </div>
+
+<!-- Booking section -->
+   <form [formGroup]="bookingForm" (ngSubmit)="bookCar(bookingForm.value)">
+  <div class="booking-section">
+    <div class="date-pickers">
+      <nz-date-picker
+        nzSize="large"
+        nzPlaceholder="From Date"
+        formControlName="fromDate"
+        class="date-picker"
+      ></nz-date-picker>
+
+      <nz-date-picker
+        nzSize="large"
+        nzPlaceholder="To Date"
+        formControlName="toDate"
+        class="date-picker"
+      ></nz-date-picker>
+    </div>
+
+    <button
+      nz-button
+      nzType="primary"
+      nzSize="large"
+      class="book-btn"
+      [disabled]="bookingForm.invalid"
+      type="submit"
+    >
+      Book Car
+    </button>
+  </div>
+</form>
+</nz-card>

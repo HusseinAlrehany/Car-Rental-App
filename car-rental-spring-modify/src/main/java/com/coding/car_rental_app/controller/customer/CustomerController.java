@@ -4,6 +4,7 @@ import com.coding.car_rental_app.apiresponse.ApiResponse;
 import com.coding.car_rental_app.dtos.BookingDetailsDTO;
 import com.coding.car_rental_app.dtos.CarDTO;
 import com.coding.car_rental_app.dtos.CarDTOPage;
+import com.coding.car_rental_app.dtos.PageOfBookingDetails;
 import com.coding.car_rental_app.services.customer.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -55,5 +56,14 @@ public class CustomerController {
                 ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
                         .body(new ApiResponse<>("Booking Failed"));
 
+    }
+
+    @GetMapping("/booking-history-page/{userId}")
+    public ResponseEntity<ApiResponse<PageOfBookingDetails>> getBookingHistory(@PathVariable Long userId,
+                                                                                  @RequestParam(defaultValue = "0")int page,
+                                                                                  @RequestParam(defaultValue = "5")int size){
+        PageOfBookingDetails pageOfBookingDetails = customerService.getPageOfBookedCars(userId, page, size);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ApiResponse<>("Success", pageOfBookingDetails));
     }
 }

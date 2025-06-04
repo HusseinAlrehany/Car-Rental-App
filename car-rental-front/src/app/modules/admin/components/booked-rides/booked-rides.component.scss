@@ -1,0 +1,23 @@
+::ng-deep .ant-table {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+::ng-deep .ant-table-thead > tr > th {
+  background: #f0f5ff;
+  font-weight: 600;
+  color: #003973;
+}
+
+::ng-deep .ant-table-tbody > tr:hover {
+  background: #e6f7ff;
+}
+
+.bold-cell {
+  font-weight: bold;
+  color: #3eaf7c;
+}
+
+::ng-deep .ant-tag {
+  font-size: 14px;
+  padding: 3px 10px;
+}

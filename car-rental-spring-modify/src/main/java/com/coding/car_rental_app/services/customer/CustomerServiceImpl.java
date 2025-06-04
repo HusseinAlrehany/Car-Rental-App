@@ -3,6 +3,7 @@ package com.coding.car_rental_app.services.customer;
 import com.coding.car_rental_app.dtos.BookingDetailsDTO;
 import com.coding.car_rental_app.dtos.CarDTO;
 import com.coding.car_rental_app.dtos.CarDTOPage;
+import com.coding.car_rental_app.dtos.PageOfBookingDetails;
 import com.coding.car_rental_app.entity.BookingDetails;
 import com.coding.car_rental_app.entity.Car;
 import com.coding.car_rental_app.entity.User;
@@ -14,11 +15,15 @@ import com.coding.car_rental_app.repository.BookingDetailsRepository;
 import com.coding.car_rental_app.repository.CarRepository;
 import com.coding.car_rental_app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -86,8 +91,32 @@ public class CustomerServiceImpl implements CustomerService{
         return mapper.getCarDTO(car);
     }
 
+    @CacheEvict(value = "pageOfBookedCarsHistory", key = "#userId + '' + #page + '' + #size",
+    allEntries = true, beforeInvocation = false)
     @Override
     public boolean bookCar(BookingDetailsDTO bookingDetailsDTO) {
+
+        Date fromDate = bookingDetailsDTO.getFromDate();
+        Date toDate = bookingDetailsDTO.getToDate();
+
+        if(fromDate.after(toDate)){
+            throw new ValidationException("From date must be before to date");
+        }
+
+
+        List<BookingDetails> overlappedBookings = bookingDetailsRepository.findOverlappingBookings(
+                bookingDetailsDTO.getCarId(),
+                fromDate,
+                toDate);
+
+        if(!overlappedBookings.isEmpty()){
+            throw new ValidationException("Car is already booked at selected period of time");
+        }
+
+        if(bookingDetailsRepository.existsByUserIdAndCarIdAndBookingStatusIn(bookingDetailsDTO.getUserId(),
+                bookingDetailsDTO.getCarId(), List.of(BookingStatus.PENDING, BookingStatus.APPROVED))){
+            throw new ValidationException("You already booked this car!!");
+        }
 
         Optional<Car> optionalCar = carRepository.findById(bookingDetailsDTO.getCarId());
         Optional<User> optionalUser = userRepository.findById(bookingDetailsDTO.getUserId());
@@ -117,5 +146,22 @@ public class CustomerServiceImpl implements CustomerService{
         bookingDetailsRepository.save(bookingDetails);
 
         return true;
+    }
+
+    @Cacheable(value = "pageOfBookedCarsHistory", key = "#userId + '' + #page + '' + #size")
+    @Override
+    public PageOfBookingDetails getPageOfBookedCars(Long userId, int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("fromDate").descending());
+
+        Page<BookingDetails> bookingDetailsPage = bookingDetailsRepository.findAllByUserId(userId,
+                pageable);
+
+        if (!bookingDetailsPage.hasContent()) {
+            throw new ValidationException("You have no booking at the moment");
+        }
+
+        return mapper.getBookingDetailsPage(bookingDetailsPage);
+
     }
 }

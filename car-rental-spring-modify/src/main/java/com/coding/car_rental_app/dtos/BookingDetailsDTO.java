@@ -34,4 +34,10 @@ public class BookingDetailsDTO {
     private Long userId;
     @Min(value= 0, message = "Car Id can not be negative")
     private Long carId;
+
+    private String customerName;
+    private String carBrand;
+    private Date carModel;
+
+
 }

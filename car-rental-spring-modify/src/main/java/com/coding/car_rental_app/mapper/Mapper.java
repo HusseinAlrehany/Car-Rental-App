@@ -53,6 +53,18 @@ public class Mapper {
         return carDTOPage;
     }
 
+    public PageOfBookingDetails getBookingDetailsPage(Page<BookingDetails> bookingDetailsPage){
+        PageOfBookingDetails pageOfBookingDetails = new PageOfBookingDetails();
+        pageOfBookingDetails.setNumber(bookingDetailsPage.getNumber());
+        pageOfBookingDetails.setSize(bookingDetailsPage.getSize());
+        pageOfBookingDetails.setTotalPages(bookingDetailsPage.getTotalPages());
+        pageOfBookingDetails.setTotalElements(bookingDetailsPage.getTotalElements());
+        pageOfBookingDetails.setContent(bookingDetailsPage.getContent()
+                .stream().map(this::getBookingDetailsDTO).collect(Collectors.toList()));
+
+        return pageOfBookingDetails;
+    }
+
     //to update existing car without creating new object(getCar(CarDTO carDto))
     //more efficient in terms of memory and performance
     //data integrity Updating the existing object ensures that relationships
@@ -115,6 +127,9 @@ public class Mapper {
 
         bookingDetailsDTO.setCarId(bookingDetails.getCar().getId());
         bookingDetailsDTO.setUserId(bookingDetails.getUser().getId());
+        bookingDetailsDTO.setCustomerName(bookingDetails.getUser().getName());
+        bookingDetailsDTO.setCarBrand(bookingDetails.getCar().getBrand());
+        bookingDetailsDTO.setCarModel(bookingDetails.getCar().getModelYear());
 
         return bookingDetailsDTO;
     }

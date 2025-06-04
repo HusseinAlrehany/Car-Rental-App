@@ -3,6 +3,7 @@ package com.coding.car_rental_app.services.customer;
 import com.coding.car_rental_app.dtos.BookingDetailsDTO;
 import com.coding.car_rental_app.dtos.CarDTO;
 import com.coding.car_rental_app.dtos.CarDTOPage;
+import com.coding.car_rental_app.dtos.PageOfBookingDetails;
 import com.coding.car_rental_app.entity.Car;
 import org.springframework.data.domain.Page;
 
@@ -16,4 +17,6 @@ public interface CustomerService {
     CarDTO getCarById(Long carId);
 
     boolean bookCar(BookingDetailsDTO bookingDetailsDTO);
+
+    PageOfBookingDetails getPageOfBookedCars(Long userId, int page, int size);
 }

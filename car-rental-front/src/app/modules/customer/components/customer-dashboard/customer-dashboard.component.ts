@@ -16,7 +16,7 @@ import { RouterLink } from '@angular/router';
 export class CustomerDashboardComponent implements OnInit{
 
   cars: any = [];
-  page = 0;
+  page = 1;
   size = 8;
   totalCars = 0;
 
@@ -46,7 +46,8 @@ export class CustomerDashboardComponent implements OnInit{
 }
 
 onPageChange(newPage: number) {
-    this.page = newPage - 1;
+    this.page = newPage;
     this.getAllCars(); 
   }
+
 }

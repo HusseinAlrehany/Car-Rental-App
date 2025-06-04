@@ -34,9 +34,9 @@ export class StorageService {
     return user?.role || '';
   }
 
-  static getUserId(): string {
+  static getUserId(): string | null{
     const user = this.getUser();
-    return user?.role || '';
+    return user? user.id : null;
   }
 
   static isAdminLoggedIn(): boolean {

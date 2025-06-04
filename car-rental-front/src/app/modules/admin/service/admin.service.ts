@@ -26,6 +26,15 @@ export class AdminService {
       withCredentials: true
     })
   }
+
+getCarPage(page: number, size: number): Observable<any> {
+
+  return this.httpClient.get(this.BaseUrl + `/car-page?page=${page-1}&size=${size}`, {
+    withCredentials: true
+  })
+}
+
+
  deleteCar(carId: number): Observable<any> {
   return this.httpClient.delete(this.BaseUrl + `/car/${carId}`,{
     withCredentials: true
@@ -43,4 +52,29 @@ export class AdminService {
     withCredentials: true
   })
  }
+
+ getAllBookedRides(): Observable<any> {
+  //get has 2 parts(URL, options)
+  return this.httpClient.get(this.BaseUrl + `/booked-cars`, {
+    withCredentials: true,
+  })
+ }
+
+ getPagedBookedRides(page: number, size: number): Observable<any>{
+
+  return this.httpClient.get(this.BaseUrl + `/paged-booked-cars?page=${page-1}&size=${size}`, {
+    withCredentials: true,
+  })
+
+ }
+
+ changeBookingStatus(id: number, status: string): Observable<any> {
+
+  //put and post has 3 parts must provided (URL, body(can be null or empty), options(contain withCredentials))
+  return this.httpClient.put(this.BaseUrl + `/booked-cars/${id}/${status}`,null, {
+    withCredentials: true,
+  })
+ }
+
+
 }

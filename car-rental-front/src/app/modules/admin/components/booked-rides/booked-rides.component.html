@@ -1,0 +1,51 @@
+<div class="container" *ngIf="bookingDetails.length != 0 ">
+  <nz-card>
+    <nz-table 
+    #bookingTable 
+    [nzData]="bookingDetails" 
+    [nzTotal]="total"
+    [nzPageSize]="pageSize"
+    [nzPageIndex]="pageIndex"
+    [nzShowPagination]="true"
+    [nzFrontPagination]="false"
+    [nzPaginationPosition]="'bottom'"
+    (nzPageIndexChange)="onPageChange($event)"
+    nzTableLayout="fixed" 
+    class="nz-elevation-z8">
+      
+      <thead>
+        <tr>
+          <th nzColumnKey="trackingId" nzWidth="150px">Customer Name</th>
+          <th nzColumnKey="userName" nzWidth="150px">Car Brand</th>
+          <th nzColumnKey="amount" nzWidth="120px">Car Model</th>
+          <th nzColumnKey="description">Price</th>
+          <th nzColumnKey="address">From Date</th>
+          <th nzColumnKey="date" nzWidth="120px">To Date </th>
+          <th nzColumnKey="status" nzWidth="120px">Duration</th>
+          <th nzColumnKey="status" nzWidth="120px">Status</th>
+          <th nzColumnKey="action" nzWidth="120px">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of bookingTable.data">
+          <td>{{ booking.customerName }}</td>
+          <td>{{ booking.carBrand }}</td>
+          <td>{{ booking.carModel | date: 'yyyy' }}</td>
+          <td class="bold-cell">{{ booking.price }}</td>
+          <td>{{ booking.fromDate | date: 'MMM d, y' }}</td>
+          <td>{{ booking.toDate | date: 'MMM d, y' }}</td>
+          <td>{{ booking.days }}</td>
+           <td>{{ booking.bookingStatus }}</td>
+          <td>
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">Action</button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="changeOrderStatus(booking.id, 'Approved')">Approved</button>
+              <button mat-menu-item (click)="changeOrderStatus(booking.id, 'Rejected')">Rejected</button>
+              <button mat-menu-item (click)="changeOrderStatus(booking.id, 'Completed')">Completed</button>
+            </mat-menu>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</div>

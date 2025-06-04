@@ -75,7 +75,7 @@ previewImage(){
 
       this.adminService.addCar(formData).subscribe(
         (res)=> {
-          if(res.id != null){
+          if(res.data.id != null){
             this.message.success("Car Added Successfully!", {nzDuration: 5000});
             this.router.navigateByUrl('/admin/dashboard');
           }

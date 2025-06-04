@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-car-details',
   standalone: true,
-  imports: [ZorroImportsModule, CommonModule],
+  imports: [ZorroImportsModule, CommonModule, RouterLink],
   templateUrl: './car-details.component.html',
   styleUrl: './car-details.component.scss'
 })
@@ -37,7 +37,7 @@ export class CarDetailsComponent implements OnInit{
       },
     (error: HttpErrorResponse)=> {
        if(error.status === 400 && error.error){
-         this.message.error(error.message);
+         this.message.error(error.error.message);
        }
      }
     )

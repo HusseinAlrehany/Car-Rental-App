@@ -40,3 +40,14 @@
     </div>
 
 </div>
+
+<div class="pagination-wrapper">
+    <nz-pagination
+     [nzTotal]="total"
+     [(nzPageIndex)]="pageIndex"
+     [nzPageSize]="pageSize"
+     [nzPageSizeOptions]="[5, 10, 20]"
+     (nzPageIndexChange)="onPageChange($event)">
+    </nz-pagination>
+
+</div>
